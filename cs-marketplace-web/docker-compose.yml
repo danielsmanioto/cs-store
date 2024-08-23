@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8089:8089" 
+    volumes:
+      - ./src:/usr/share/nginx/html
+    restart: always

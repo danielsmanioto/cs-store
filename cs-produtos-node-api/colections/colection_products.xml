@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "fa691993-b667-4be2-917c-ac59d86369be",
+		"name": "CS API Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "434764"
+	},
+	"item": [
+		{
+			"name": "GET /produtos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWFhOGVhOWYwOGE2NjM0NGQ2MjVkZiIsImlhdCI6MTcxMzAyNDU3NX0.bgV_vU3cgCCHtKohMUzIixyG5myw7cobzx3xVSSYmBs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /produtos/{id}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWFhOGVhOWYwOGE2NjM0NGQ2MjVkZiIsImlhdCI6MTcxMzAyODExOH0.mnK436apQeRXWlthgXCOXWSgHN0z-WzK9Odvn78riXo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/produtos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"produtos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /produtos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWFhOGVhOWYwOGE2NjM0NGQ2MjVkZiIsImlhdCI6MTcxMzA0MzU0Nn0.L1RqclyBNHrboSt0t7fSfmpexjEtuc35jQNRpJOw33A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nome\": \"Produto Novo\", \"preco\": 10.00}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /produtos/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nome\": \"Produto Atualizado\", \"preco\": 15.00}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/produtos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"produtos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
