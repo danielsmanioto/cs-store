@@ -1,10 +1,21 @@
 # cs-produtos-node-api
 
+
+
 # Rodando banco
 - `docker network create cs-produtos-infra-bd_default`
 - `docker-compose up`
 - Acessar localhost:8080 com banco de dados produtosdb
 -
+
+# Login banco de dados
+
+ user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: 'example',
+    port: 5432
+
 # criando estrutura banco de dados rodando os scripts 
 
 # Rodando aplicacao
