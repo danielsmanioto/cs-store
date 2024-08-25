@@ -26,7 +26,7 @@ docker compose up --build -d
 
 # Entrar na pasta src e executar o comando para subir o Node.js
 cd src
-node app.js
+node app.js &
 
 # Voltar para a pasta anterior
 cd ..

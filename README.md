@@ -53,7 +53,7 @@ Para contribuir com este projeto, siga os passos abaixo:
 - Abra um Pull Request.
 
 
-# Passo a passio subir e oarar todas as aplicacoes 
+# Como subir todas as aplicacoes 
 
 # 1. Subir todos os containers 
 
