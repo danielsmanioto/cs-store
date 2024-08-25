@@ -68,7 +68,16 @@ Para contribuir com este projeto, siga os passos abaixo:
 
 `./build.sh`
 
+
+# 3. verificar se porta esta sendo usada e matar processo
+
+`lsof -i :3000`
+`kill -9 <PID>`
+
+
 # 9. OParar todos os containers 
 
 `./stop.sh`
+
+
 

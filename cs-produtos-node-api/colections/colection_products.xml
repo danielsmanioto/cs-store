@@ -118,6 +118,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET /produtos/healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/produtos/healthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"produtos",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
