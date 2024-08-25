@@ -6,6 +6,8 @@ Bem-vindo ao repositório do projeto **CS**, que contém três subprojetos princ
 
 <img width="1201" alt="image" src="https://github.com/user-attachments/assets/333718b5-00d8-4d71-8c38-ff0416d12584">
 
+# Desenho de arquitetura compartilhado 
+https://excalidraw.com/#json=1dIJ_g3Rxwecd5zM5lDAc,lQZjDzDfJTg5rXZAPeOs8w 
 
 - **CS-Auth**: Serviço de autenticação.
 - **CS-Marketplace-Web**: Aplicação web do marketplace.
