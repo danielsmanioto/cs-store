@@ -32,7 +32,6 @@ const verificarToken = (req, res, next) => {
   });
 };
 
-// Adicione o middleware verificarToken nas rotas que você deseja proteger
 app.get('/produtos', verificarToken, async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM produtos');
@@ -87,4 +86,13 @@ app.put('/produtos/:id', verificarToken, async (req, res) => {
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000');
+});
+
+app.get('/health', (req, res) => {
+  try {
+    res.status(200).json({ message: 'API is healthy' });
+  } catch (error) {
+    console.error('Error in health check:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
