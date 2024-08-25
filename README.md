@@ -55,7 +55,14 @@ Para contribuir com este projeto, siga os passos abaixo:
 
 # Como subir todas as aplicacoes 
 
-# 1. Subir todos os containers 
+# 1. pre requisitos
+
+1. Instalar o docker na maquina 
+2. Iniciar o servico do docker ou docker desktop na maquina
+3. Instalar o dbeaver 
+4. Instalar o mongo db express
+
+# 2. Subir todos os containers 
 
 `./build.sh`
 

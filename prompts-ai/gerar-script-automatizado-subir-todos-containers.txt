@@ -1,0 +1,21 @@
+me ajuda a criar um script .sh 
+eu quero executar ele e criar tudo que oreciso vamos la 
+
+entrar na pasta cs-auth 
+executar o comando docker compose up --build -d 
+
+depos voltei para a pasta anterior 
+
+entrar na pasta cs-marketplace-web 
+executar o comando docker compose up --build -d
+
+depos voltei para a pasta anterior 
+
+entrar na pasta cs-produtos-node-api 
+executar o comando docker compose up --build -d
+
+entrar na pasta src
+executar o comnando node app.js para subir o node
+
+executar o comanndo docker ps para mostrar o que esta atrivo 
+mandar uma mensagem que deu sucesso e boa
