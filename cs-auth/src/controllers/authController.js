@@ -6,6 +6,15 @@ const bcrypt = require('bcryptjs');
 const hashPassword = async (password) => await bcrypt.hash(password, 10);
 const generateToken = (userId) => jwt.sign({ id: userId }, process.env.JWT_SECRET);
 
+const health = (req, res) => {
+    try {
+        res.status(200).json({ message: 'API is healthy' });
+    } catch (error) {
+        console.error('Error in health check:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 const register = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -48,7 +57,10 @@ const login = async (req, res) => {
 };
 
 // Demonstração de que as funções estão sendo exportadas corretamente.
-console.log("Exporting functions:", { register: !!register, login: !!login });
+console.log("Exporting functions:", { register: !!register, 
+    login: !!login, 
+    health: !!health });
 
 exports.register = register;
 exports.login = login;
+exports.health = health;

@@ -11,4 +11,7 @@ router.post('/register', authController.register);
 // Rota para login
 router.post('/login', authController.login);
 
+// Rota heatch
+router.get('/health', authController.health);
+
 module.exports = router;

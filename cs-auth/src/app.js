@@ -9,11 +9,14 @@ require('dotenv').config();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// Conectar ao MongoDB sem opções obsoletas
+mongoose.connect(process.env.DB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
+// Definir as rotas
 app.use('/auth', authRoutes);
 
+// Configurar e iniciar o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
