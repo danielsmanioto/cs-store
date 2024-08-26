@@ -15,6 +15,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
         if (response.ok) {
             window.location.href = 'produtos.html';
+            localStorage.setItem('token', data.token);
         } else {
             alert('Usuário ou senha inválidos.')
             throw new Error('Usuário ou senha inválidos.');

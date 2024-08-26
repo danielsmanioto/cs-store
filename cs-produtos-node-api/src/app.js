@@ -37,11 +37,42 @@ app.get('/produtos/healthcheck', (req, res) => {
   res.status(200).json({ message: 'API is healthy' });
 });
 
-// Aplicar o middleware verificarToken somente nas rotas necessárias
 app.get('/produtos', verificarToken, async (req, res) => {
+  let { page = 1, limit = 10, search = '' } = req.query; 
+
+  // Converte page e limit para inteiros
+  page = parseInt(page, 10);
+  limit = parseInt(limit, 10);
+  const offset = (page - 1) * limit;
+
   try {
-    const { rows } = await pool.query('SELECT * FROM produtos');
-    res.json(rows);
+    let query = 'SELECT * FROM produtos';
+    let countQuery = 'SELECT COUNT(*) FROM produtos';
+    let queryParams = [];
+    let countQueryParams = [];
+
+    // Adiciona o filtro de nome, se fornecido
+    if (search) {
+      query += ' WHERE nome ILIKE $1';
+      countQuery += ' WHERE nome ILIKE $1';
+      queryParams.push(`%${search}%`);
+      countQueryParams.push(`%${search}%`);
+    }
+
+    // Adiciona a ordenação, limite e offset
+    query += ' ORDER BY id LIMIT $2 OFFSET $3';
+    queryParams.push(limit, offset);
+
+    const { rows } = await pool.query(query, queryParams);
+    const { rows: [{ count }] } = await pool.query(countQuery, countQueryParams);
+
+    res.json({
+      produtos: rows,
+      total: parseInt(count, 10),
+      page,
+      limit,
+      totalPages: Math.ceil(count / limit),
+    });
   } catch (err) {
     console.error('Erro ao obter produtos', err);
     res.status(500).json({ message: 'Erro interno do servidor' });
@@ -53,12 +84,11 @@ app.get('/produtos/:id', verificarToken, async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM produtos WHERE id = $1', [id]);
     if (rows.length === 0) {
-      res.status(404).json({ message: 'Produto não encontrado' });
-    } else {
-      res.json(rows[0]);
+      return res.status(404).json({ message: 'Produto não encontrado' });
     }
+    res.json(rows[0]);
   } catch (err) {
-    console.error('Erro ao obter produto por ID', err);
+    console.error('Erro ao obter produto', err);
     res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
@@ -66,7 +96,10 @@ app.get('/produtos/:id', verificarToken, async (req, res) => {
 app.post('/produtos', verificarToken, async (req, res) => {
   const { nome, preco } = req.body;
   try {
-    const { rows } = await pool.query('INSERT INTO produtos (nome, preco) VALUES ($1, $2) RETURNING *', [nome, preco]);
+    const { rows } = await pool.query(
+      'INSERT INTO produtos (nome, preco) VALUES ($1, $2) RETURNING *',
+      [nome, preco]
+    );
     res.status(201).json(rows[0]);
   } catch (err) {
     console.error('Erro ao adicionar produto', err);
@@ -78,18 +111,34 @@ app.put('/produtos/:id', verificarToken, async (req, res) => {
   const { id } = req.params;
   const { nome, preco } = req.body;
   try {
-    const { rowCount } = await pool.query('UPDATE produtos SET nome = $1, preco = $2 WHERE id = $3', [nome, preco, id]);
-    if (rowCount === 0) {
-      res.status(404).json({ message: 'Produto não encontrado' });
-    } else {
-      res.json({ message: 'Produto atualizado com sucesso' });
+    const { rows } = await pool.query(
+      'UPDATE produtos SET nome = $1, preco = $2 WHERE id = $3 RETURNING *',
+      [nome, preco, id]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
     }
+    res.json(rows[0]);
   } catch (err) {
     console.error('Erro ao atualizar produto', err);
     res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
 
+app.delete('/produtos/:id', verificarToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rowCount } = await pool.query('DELETE FROM produtos WHERE id = $1', [id]);
+    if (rowCount === 0) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+    res.status(204).end();
+  } catch (err) {
+    console.error('Erro ao excluir produto', err);
+    res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+});
+
 app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+  console.log('Server running on http://localhost:3000');
 });
