@@ -2,6 +2,8 @@ window.onload = async function() {
     const productForm = document.getElementById('product-form');
     const saveBtn = document.getElementById('save-btn');
     const updateBtn = document.getElementById('update-btn');
+    const pageInput = document.getElementById('page-input');
+    const goToPageBtn = document.getElementById('go-to-page-btn');
     let currentPage = 1;
 
     try {
@@ -14,6 +16,21 @@ window.onload = async function() {
     document.getElementById('search').addEventListener('input', async function() {
         currentPage = 1;
         await fetchProducts();
+    });
+
+    pageInput.addEventListener('input', function() {
+        const page = parseInt(pageInput.value, 10);
+        if (page > 0) {
+            currentPage = page;
+        }
+    });
+
+    goToPageBtn.addEventListener('click', async function() {
+        const page = parseInt(pageInput.value, 10);
+        if (page > 0) {
+            currentPage = page;
+            await fetchProducts();
+        }
     });
 
     productForm.addEventListener('submit', async function(event) {
@@ -46,7 +63,6 @@ window.onload = async function() {
     });
 }
 
-// Buscar produtos
 async function fetchProducts(page = 1) {
     const productList = document.getElementById('product-list');
     const token = await getToken();
@@ -125,18 +141,13 @@ function renderPagination(currentPage, totalPages) {
             button.disabled = true;
         } else {
             button.onclick = async () => {
+                currentPage = page;
                 await fetchProducts(page);
+                pageInput.value = page; // Atualiza o campo de entrada
             };
         }
         paginationDiv.appendChild(button);
     }
-
-    document.getElementById('list-btn').addEventListener('click', async function() {
-        document.getElementById('search').value = ''; // Limpa o campo de busca
-        currentPage = 1;
-        await fetchProducts(); // Lista todos os produtos
-    });
-
 }
 
 // Adicionar produto
@@ -182,22 +193,15 @@ async function updateProduct(id, product) {
         throw error;
     }
 }
-
-// Editar produto
 function editProduct(product) {
     document.getElementById('product-id').value = product.id;
     document.getElementById('nome').value = product.nome;
     document.getElementById('preco').value = product.preco;
-
-    document.getElementById('save-btn').style.display = 'none';
     document.getElementById('update-btn').style.display = 'block';
+    document.getElementById('save-btn').style.display = 'none';
 }
 
-document.getElementById('list-btn').addEventListener('click', async function() {
-    document.getElementById('search').value = ''; // Limpa o campo de busca
-    await fetchProducts(); // Lista todos os produtos
-});
-
+// Excluir produto
 async function deleteProduct(id) {
     const token = await getToken();
 
@@ -212,15 +216,21 @@ async function deleteProduct(id) {
         if (!response.ok) {
             throw new Error('Erro ao excluir produto');
         }
-
-        await fetchProducts(); // Atualiza a lista após exclusão
+        await fetchProducts();
     } catch (error) {
         console.error(error);
-        alert('Erro ao excluir produto.');
+        alert('Erro ao excluir produto');
     }
 }
 
-// Obter o token de autenticação
+// Função para obter o token do localStorage
 async function getToken() {
-    return localStorage.getItem('token');
+    // Recupera o token do localStorage
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+        throw new Error('Token de autenticação não encontrado no localStorage.');
+    }
+    
+    return token;
 }
