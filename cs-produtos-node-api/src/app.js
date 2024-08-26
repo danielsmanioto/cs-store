@@ -38,7 +38,7 @@ app.get('/produtos/healthcheck', (req, res) => {
 });
 
 app.get('/produtos', verificarToken, async (req, res) => {
-  let { page = 1, limit = 10, search = '' } = req.query; 
+  let { page = 1, limit = 10, search = '' } = req.query;
 
   // Converte page e limit para inteiros
   page = parseInt(page, 10);
@@ -46,35 +46,42 @@ app.get('/produtos', verificarToken, async (req, res) => {
   const offset = (page - 1) * limit;
 
   try {
+    // Base das consultas SQL
     let query = 'SELECT * FROM produtos';
     let countQuery = 'SELECT COUNT(*) FROM produtos';
-    let queryParams = [];
-    let countQueryParams = [];
+    const queryParams = [];
+    const countQueryParams = [];
 
     // Adiciona o filtro de nome, se fornecido
-    if (search) {
+    if (search != '') {
       query += ' WHERE nome ILIKE $1';
       countQuery += ' WHERE nome ILIKE $1';
       queryParams.push(`%${search}%`);
       countQueryParams.push(`%${search}%`);
+
+      query += ' ORDER BY id LIMIT $2 OFFSET $3';
+      queryParams.push(limit, offset);
+    } else {
+      query += ' ORDER BY id LIMIT $1 OFFSET $2';
+      queryParams.push(limit, offset);
     }
 
-    // Adiciona a ordenação, limite e offset
-    query += ' ORDER BY id LIMIT $2 OFFSET $3';
-    queryParams.push(limit, offset);
-
+    // Executa a consulta para obter produtos
     const { rows } = await pool.query(query, queryParams);
-    const { rows: [{ count }] } = await pool.query(countQuery, countQueryParams);
+
+    // Executa a consulta para contar o total de produtos
+    const countResult = await pool.query(countQuery, countQueryParams.length ? countQueryParams : undefined);
+    const count = parseInt(countResult.rows[0].count, 10);
 
     res.json({
       produtos: rows,
-      total: parseInt(count, 10),
+      total: count,
       page,
       limit,
       totalPages: Math.ceil(count / limit),
     });
   } catch (err) {
-    console.error('Erro ao obter produtos', err);
+    console.error('Erro ao obter produtos:', err.message, err.stack);
     res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
