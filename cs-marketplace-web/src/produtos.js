@@ -61,6 +61,7 @@ window.onload = async function() {
             alert('Erro ao adicionar/atualizar produto.');
         }
     });
+    
 }
 
 async function fetchProducts(page = 1) {
@@ -143,27 +144,30 @@ function renderPagination(currentPage, totalPages) {
             button.onclick = async () => {
                 currentPage = page;
                 await fetchProducts(page);
-                pageInput.value = page; // Atualiza o campo de entrada
+                pageInput.value = page; 
             };
         }
         paginationDiv.appendChild(button);
     }
 }
 
-// Adicionar produto
 async function addProduct(product) {
     const token = await getToken();
-
+    
     try {
+        let product_to_save = JSON.stringify(product);
         const response = await fetch('http://localhost:3000/produtos', {
             method: 'POST',
             headers: {
                 'authorization': token,
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(product),
+            body: product_to_save,
         });
 
-        if (!response.ok) {
+        if (response.ok) {
+            alert("Produto adicionado com sucesso!")
+        } else {
             throw new Error('Erro ao adicionar produto');
         }
     } catch (error) {
@@ -172,7 +176,6 @@ async function addProduct(product) {
     }
 }
 
-// Atualizar produto
 async function updateProduct(id, product) {
     const token = await getToken();
 
@@ -181,18 +184,23 @@ async function updateProduct(id, product) {
             method: 'PUT',
             headers: {
                 'authorization': token,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(product),
         });
 
-        if (!response.ok) {
+        if (response.ok) {
+            alert("Produto alterado com sucesso!");
+        } else {
             throw new Error('Erro ao atualizar produto');
         }
+
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
+
 function editProduct(product) {
     document.getElementById('product-id').value = product.id;
     document.getElementById('nome').value = product.nome;
@@ -201,7 +209,6 @@ function editProduct(product) {
     document.getElementById('save-btn').style.display = 'none';
 }
 
-// Excluir produto
 async function deleteProduct(id) {
     const token = await getToken();
 
@@ -210,10 +217,13 @@ async function deleteProduct(id) {
             method: 'DELETE',
             headers: {
                 'authorization': token,
+                'Content-Type': 'application/json'
             },
         });
 
-        if (!response.ok) {
+        if (response.ok) {
+            alert("Produto removido com sucesso!");
+        } else {
             throw new Error('Erro ao excluir produto');
         }
         await fetchProducts();
@@ -223,14 +233,7 @@ async function deleteProduct(id) {
     }
 }
 
-// Função para obter o token do localStorage
 async function getToken() {
-    // Recupera o token do localStorage
     const token = localStorage.getItem('token');
-    
-    //if (!token) {
-    //    throw new Error('Token de autenticação não encontrado no localStorage.');
-    //}
-    
     return token;
 }

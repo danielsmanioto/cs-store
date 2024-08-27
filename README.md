@@ -1,6 +1,7 @@
 # Projeto CS
 
-Bem-vindo ao repositório do projeto **CS**, que contém três subprojetos principais:
+Bem-vindo ao repositório do projeto **CS-Store**, que contém três subprojetos principais:
+Objetivo deste projeto é simular a arquitetura de uma loja que em breve aceitará vendas online e uma espectativa de escala diária.
 
 # Desenho de arquitetura
 
@@ -54,7 +55,6 @@ Para contribuir com este projeto, siga os passos abaixo:
 - Faça o push para a branch (git push origin feature/nova-feature).
 - Abra um Pull Request.
 
-
 # Como subir todas as aplicacoes 
 
 # 1. pre requisitos
@@ -71,11 +71,17 @@ Para contribuir com este projeto, siga os passos abaixo:
 
 # 3. verificar se porta esta sendo usada e matar processo
 
+1. Mac
+
 `lsof -i :3000`
 `kill -9 <PID>`
 
+2. Windows 
 
-# 9. OParar todos os containers 
+`netstat -ano | findstr :3000`
+`taskkill /PID <PID> /F`
+
+# 9. Parar todos os containers 
 
 `./stop.sh`
 
