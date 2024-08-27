@@ -228,9 +228,9 @@ async function getToken() {
     // Recupera o token do localStorage
     const token = localStorage.getItem('token');
     
-    if (!token) {
-        throw new Error('Token de autenticação não encontrado no localStorage.');
-    }
+    //if (!token) {
+    //    throw new Error('Token de autenticação não encontrado no localStorage.');
+    //}
     
     return token;
 }
