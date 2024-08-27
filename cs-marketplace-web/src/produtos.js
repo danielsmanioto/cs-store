@@ -190,6 +190,7 @@ async function updateProduct(id, product) {
         });
 
         if (response.ok) {
+            document.getElementById('product-id').value = "";
             alert("Produto alterado com sucesso!");
         } else {
             throw new Error('Erro ao atualizar produto');
