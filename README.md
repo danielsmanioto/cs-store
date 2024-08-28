@@ -5,7 +5,7 @@ Objetivo deste projeto é simular a arquitetura de uma loja que em breve aceitar
 
 # Desenho de arquitetura
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/ef482151-ffa8-4be0-aec2-c0eeac32213a)
 
 # Desenho de arquitetura compartilhado 
 
