@@ -4,10 +4,10 @@ Bem-vindo ao repositório do projeto **CS-Store**, que contém três subprojetos
 Objetivo deste projeto é simular a arquitetura de uma loja que em breve aceitará vendas online e uma espectativa de escala diária.
 
 # Desenho de arquitetura
-
-<img width="1201" alt="image" src="https://github.com/user-attachments/assets/333718b5-00d8-4d71-8c38-ff0416d12584">
+<img width="1176" alt="Screen Shot 2024-08-22 at 21 12 38" src="https://github.com/user-attachments/assets/ae5a625c-515f-415d-8cf5-4276d7e13fbb">
 
 # Desenho de arquitetura compartilhado 
+
 https://excalidraw.com/#json=1dIJ_g3Rxwecd5zM5lDAc,lQZjDzDfJTg5rXZAPeOs8w 
 
 - **CS-Auth**: Serviço de autenticação.
