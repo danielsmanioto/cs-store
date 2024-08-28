@@ -4,7 +4,8 @@ Bem-vindo ao repositório do projeto **CS-Store**, que contém três subprojetos
 Objetivo deste projeto é simular a arquitetura de uma loja que em breve aceitará vendas online e uma espectativa de escala diária.
 
 # Desenho de arquitetura
-<img width="1176" alt="Screen Shot 2024-08-22 at 21 12 38" src="https://github.com/user-attachments/assets/ae5a625c-515f-415d-8cf5-4276d7e13fbb">
+
+![Uploading image.png…]()
 
 # Desenho de arquitetura compartilhado 
 
